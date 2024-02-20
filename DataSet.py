@@ -16,13 +16,13 @@ data = []
 labels = []
 
 for dir_ in os.listdir(DATA_DIR):
-
     dir_path = os.path.join(DATA_DIR, dir_)
     if os.path.isdir(dir_path):  # Check if it's a directory
         for img_filename in os.listdir(dir_path):
             img_path = os.path.join(dir_path, img_filename)
             if os.path.isfile(img_path):  # Check if it's a file
                 print(f"Processing image: {img_filename}")
+                data_aux = []  # Initialize data auxiliary list for each hand
                 img = cv2.imread(img_path)
                 if img is not None:  # Check if the file is a valid image
                     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -30,13 +30,9 @@ for dir_ in os.listdir(DATA_DIR):
                     if results.multi_hand_landmarks:
 
                         for hand_landmarks in results.multi_hand_landmarks:
-                            data_aux = []  # Initialize data auxiliary list for each hand
                             for landmark in hand_landmarks.landmark:
-
-
                                 x = landmark.x
                                 y = landmark.y
-                                # Append x and y coordinates to data auxiliary list
                                 data_aux.append(x)
                                 data_aux.append(y)
 
